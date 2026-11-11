@@ -3,6 +3,7 @@ module FortranWMBar
     use gtk
     use g, only: g_timeout_add
     use bindings_GtkLayer
+    use modules_date, only: date_time_string
     implicit none
 
     ! TODO - bluetooth, internet, calendar, drives, volume
@@ -12,7 +13,7 @@ module FortranWMBar
 contains
     subroutine gtk_main_loop(app) bind(c)
         type(c_ptr), value, intent(in) :: app
-        type(c_ptr) :: window_ptr, hbox, button
+        type(c_ptr) :: window_ptr, clock_label, hbox, button
 
         window_ptr = gtk_application_window_new(app)
         call gtk_window_set_title(window_ptr, "fortran-bar"//c_null_char)
@@ -29,8 +30,8 @@ contains
         hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 8_c_int)
         call gtk_window_set_child(window_ptr, hbox)
 
-        ! clock_label = gtk_label_new("--:--:--"//c_null_char)
-        ! call gtk_box_append(hbox, clock_label)
+        clock_label = gtk_label_new(date_time_string()//c_null_char)
+        call gtk_box_append(hbox, clock_label)
 
         button = gtk_button_new_with_label("Quit"//c_null_char)
         call gtk_box_append(hbox, button)
