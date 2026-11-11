@@ -1,6 +1,6 @@
 # FortranBar
 
-A bar written in Fortran
+A bar written in Fortran with GTK. Currently just a skeleton.
 
 ### Building
 
